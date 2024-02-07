@@ -2,7 +2,7 @@ ENTRY(main)
 
 SECTIONS
 {
-    . = 0x8040000;
+    . = 0x80800000;
     approm_start = .;
     .text : {
         *(.HEADER)

@@ -4,7 +4,7 @@
 .extern approm_start
 .extern CODE_END
 hdr:
-    j main
+    beq   $0,$0, main
     .long CODE_START; // code checksum, TODO: Calculate it when fixing header
     .long CODE_END; // rom length, TODO: Calculate it when fixing header
 CODE_START:
