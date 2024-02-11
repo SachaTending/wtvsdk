@@ -6,6 +6,7 @@ SECTIONS
     approm_start = .;
     .text : {
         *(.HEADER)
+        CODE_REAL_START = .;
         *(.text)
     }
     CODE_END = .;
@@ -17,5 +18,9 @@ SECTIONS
     }
     .bss : {
         *(.bss)
+    }
+    /DISCARD/ : {
+        *(.eh_frame)
+        *(.note .note.*)
     }
 }

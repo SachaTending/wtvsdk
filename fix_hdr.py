@@ -26,6 +26,7 @@ class AppRomHeader(BigEndianStructure):
     jump: int
     checksum: int
     rom_length: int
+    romfs_base_address: int
     rom_base_address: int
     _pack_ = 0
 
@@ -42,12 +43,11 @@ file = open("approm_not_fixed.o", "rb")
 
 data = file.read(sizeof(AppRomHeader))
 approm = AppRomHeader.from_buffer(bytearray(data), 0)
-print(hex(data[0]))
+
 print("Fixing approm...")
 print("1/{}: Fixing code length...".format(STEPS))
 
 l = approm.rom_length - approm.checksum
-
 al = (l / 4) + 3
 
 joeb = 0
@@ -55,7 +55,6 @@ while (al-int(al)) != 0.0:
     joeb += 1
     l += 4
     al = (l / 4) + 3
-print((al-int(al)))
 print("joeb padings needs to be added:", joeb)
 
 file.seek(0)
@@ -79,19 +78,26 @@ print("code cheksum:", c)
 print("Injecting code checksum...")
 out[0x8:0xc] = pack(PACK_INT, c)
 
-print("3/{}: Injecting ROMFS...".format(STEPS))
-rfs = open("romfs.bin", "rb").read()
-romfs_off = len(out)
-out += rfs
-print("Injecting romfs size...")
-rl = ((len(rfs)+l) / 4) + 3
-out[0xc:0x10] = pack(PACK_INT, int(rl))
-print("Injecting ROMFS base address...")
-out[0x24:0x28] = pack(PACK_INT, romfs_off+approm.rom_base_address)
-if out[0] != 0x10:
-    print("out[0] not 0x10, correcting...")
-    out[0] = 0x10
+s = 1024*1024*4
+s -= len(out)
 
+def inject_romfs():
+    global out
+    global s
+    print("3/{}: Injecting ROMFS...".format(STEPS))
+    rfs = open("rfs.bin", "rb").read()
+    s -= len(rfs)
+    out += b"\x00"*s
+    romfs_off = len(out)
+    out += rfs
+    print("Injecting ROMFS base address...")
+    out[0x24:0x28] = pack(PACK_INT, approm.rom_base_address+romfs_off)
+
+inject_romfs()
+
+print("Injecting rom size...")
+rl = ((len(out[0xc:])) / 4) + 3
+out[0xc:0x10] = pack(PACK_INT, int(rl))
 print("Recalculating code checksum...")
 c = np.uint32(approm.jump)
 
@@ -99,9 +105,8 @@ a = BytesIO(out)
 a.seek(0xc)
 for i in range(0, clen-24, 4):
     d = a.read(4)
-    print(i, hex(i), c, hex(c), hex(unpack(PACK_INT, d)[0]))
+    #print(i, hex(i), c, hex(c), hex(unpack(PACK_INT, d)[0]))
     c += np.uint32(unpack(PACK_INT, d)[0])
-print(c, hex(c))
 out[0x8:0xc] = pack(PACK_INT, c)
 print("all done(i think), saving to file...")
 open("approm.o", "wb").write(out)

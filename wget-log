@@ -1,0 +1,7 @@
+--2024-02-10 21:54:14--  https://cdn.discordapp.com/attachments/678424636173844489/1205949237901135872/ROM_Store?ex=65da3abf
+Загружен сертификат CA «/etc/ssl/certs/ca-certificates.crt»
+Распознаётся cdn.discordapp.com (cdn.discordapp.com)… 162.159.129.233, 162.159.135.233, 162.159.134.233, ...
+Подключение к cdn.discordapp.com (cdn.discordapp.com)|162.159.129.233|:443... соединение установлено.
+HTTP-запрос отправлен. Ожидание ответа… 403 Forbidden
+2024-02-10 21:54:15 ОШИБКА 403: Forbidden.
+

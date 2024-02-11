@@ -1,5 +1,5 @@
 from ctypes import BigEndianStructure, c_uint32, sizeof
-
+from os import SEEK_END
 
 class AppRomHeader(BigEndianStructure):
     _fields_ = [
@@ -27,6 +27,9 @@ print(f"approm header size: {sizeof(AppRomHeader)}")
 file = open("approm.o", "rb")
 
 data = file.read(sizeof(AppRomHeader))
+file.seek(0, SEEK_END)
+s = file.tell()
+file.seek(0)
 approm = AppRomHeader.from_buffer(bytearray(data), 0)
 
 for i in AppRomHeader._fields_:
@@ -34,6 +37,15 @@ for i in AppRomHeader._fields_:
     print(f"{i}: {getattr(approm, i)}, {hex(getattr(approm, i))}")
     if i == "build_flags":
         build_flags = getattr(approm, i)
+
+whatever1 = approm.code_length
+whatever1 = (whatever1 - 3) * 4
+whatever2 = (approm.rom_length - 3) * 4
+print("Code length-0xC:", hex(whatever1))
+print("ROM Length-0xC:", hex(whatever2))
+
+print("ROM Length == approm length:", whatever2+0xC == s)
+print(hex(whatever2+0xC), hex(s))
 
 build_flags: int
 

@@ -1,14 +1,14 @@
 OBJ = header.o test.o
 
 build: link
-
+ARCH = r5k -mabi=32
 %.o: %.S
 	@echo "  [  AS] $@"
-	@mips64-gcc -march=r5k $< -o $@ -c -O0
+	@mips64-gcc -march=$(ARCH) $< -o $@ -c -O0
 
 %.o: %.c
 	@echo "  [  CC] $@"
-	@mips64-gcc -march=r5k $< -o $@ -c
+	@mips64-gcc -march=$(ARCH) $< -o $@ -c
 
 
 link: $(OBJ)
@@ -17,7 +17,7 @@ link: $(OBJ)
 	@echo "  [ GEN] approm_not_fixed.o"
 	@mips64-objcopy -O binary approm.elf approm_not_fixed.o
 	@echo "  [ FIX] approm.o"
-	@python3 fix_hdr.py
+	@python3 fix2.py
 
 rm:
 	@rm $(OBJ)
