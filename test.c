@@ -4,7 +4,7 @@ typedef unsigned int u32;
 #define LEDs *((u32 *)0xa4004004)
 #define WATCHDOG *((u32 *)0xa4001018)
 void main() {
-    WATCHDOG = 0;
+    //WATCHDOG = 0;
     LEDs=0b11111111111111111111111111111000;
     for(;;);
 }
