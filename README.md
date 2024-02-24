@@ -32,4 +32,4 @@ Just send pull requests(store this src in folder libsolo)
 
 # Special thanks to:
  - WebTV wiki and webtv redialed members for helping with this sdk.
- - @msntv2guy for testing approm that just turns on all leds(tested on sony int-w200 derby)
+ - @msntv2guy and @nitrate92 for testing approm that just turns on all leds
