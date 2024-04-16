@@ -4,6 +4,7 @@
 .extern approm_start
 .extern CODE_END
 .extern CODE_REAL_START
+.extern pre_main
 hdr:
     beq   $0,$0, main
     .long CODE_START; // code checksum, TODO: Calculate it when fixing header
@@ -22,8 +23,8 @@ CODE_START:
     .long 0; // heap data compressed size, what the fuck
     .long 0; // compressed code address, rom IS NOT compressed, store only nothing.
     .long 0; // compressed code size, store, you guested it, nothing.
-    .word 0; // Important, needs to jump become 0x10000012
-    .byte 0;
+    ;.word 0; // Important, needs to jump become 0x10000012
+    ;.byte 0;
 
 // CODE_START AND CODE_END are for fixing header
 .globl hdr

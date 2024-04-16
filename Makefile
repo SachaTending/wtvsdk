@@ -1,24 +1,26 @@
 OBJ = header.o test.o
 
+TOOLCHAIN=mips
+
 build: link
-ARCH = r5k -mabi=32 -I libsolo
+CFLAGS = -march=r5k -I libsolo
 
 include libsolo/Makefile
 
 %.o: %.S
 	@echo "  [  AS] $@"
-	@mips64-gcc -march=$(ARCH) $< -o $@ -c -O0
+	@$(TOOLCHAIN)-gcc $(CFLAGS) $< -o $@ -c -O0
 
 %.o: %.c
 	@echo "  [  CC] $@"
-	@mips64-gcc -march=$(ARCH) $< -o $@ -c
+	@$(TOOLCHAIN)-gcc $(CFLAGS) $< -o $@ -c
 
 
 link: $(OBJ)
 	@echo "  [  LD] approm.elf"
-	@mips64-ld -T link.ld $(OBJ) -o bin/approm.elf -no-pie
+	@$(TOOLCHAIN)-ld -T link.ld $(OBJ) -o bin/approm.elf -no-pie
 	@echo "  [ GEN] approm_not_fixed.o"
-	@mips64-objcopy -O binary bin/approm.elf bin/approm_not_fixed.o
+	@$(TOOLCHAIN)-objcopy -O binary bin/approm.elf bin/approm_not_fixed.o
 	@echo "  [ FIX] approm.o"
 	@python3 scripts/fix2.py bin/approm_not_fixed.o approm.o
 
