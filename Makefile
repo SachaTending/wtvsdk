@@ -3,7 +3,7 @@ OBJ = header.o test.o
 TOOLCHAIN=mips
 
 build: link
-CFLAGS = -march=r5k -I libsolo
+CFLAGS = -march=4kec -I libsolo
 
 include libsolo/Makefile
 

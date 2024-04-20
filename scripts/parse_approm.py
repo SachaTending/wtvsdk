@@ -1,5 +1,6 @@
 from ctypes import BigEndianStructure, c_uint32, sizeof
 from os import SEEK_END
+import sys
 
 class AppRomHeader(BigEndianStructure):
     _fields_ = [
@@ -24,7 +25,11 @@ class AppRomHeader(BigEndianStructure):
     _pack_ = 0
 print(f"approm header size: {sizeof(AppRomHeader)}")
 
-file = open("approm.o", "rb")
+approm_file = "approm.o"
+if len(sys.argv) > 1:
+    approm_file = sys.argv[1]
+
+file = open(approm_file, "rb")
 
 data = file.read(sizeof(AppRomHeader))
 file.seek(0, SEEK_END)
