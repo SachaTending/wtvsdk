@@ -2,7 +2,7 @@
 This sdk was made by TendingStream73(github: sachatending), with help from webtv wiki
 
 # How i can create homebrew application, and compile it?
-1. Get gcc cross compiler for mips, precompiled version ![is here](https://tendhost.ddns.net/stuff/webtv_toolchain.tar.gz), or compile yourself(Note: when you configuring gcc and binutils, use target mips64)
+1. Get gcc cross compiler for mips, precompiled version ![is here](https://tendhost.ddns.net/stuff/webtv_toolchain.tar.gz)(https://tendhost.ddns.net/stuff/webtv_toolchain.tar.gz), or compile yourself(Note: when you configuring gcc and binutils, use target mips64)
 2. (If precompiled)Add to path bin folder(this is where gcc and other stuff located)
 3. For fix_hdr.py, you need python version 3.9=< and numpy(because it has normal realization of uint32(important for code checksum generation)
 
@@ -10,7 +10,7 @@ Now you can compile this, as a result, you get approm.o. This is your homebrew a
 
 # I want to interact with solo asic, where i can get documentation
 
-Documentation of solo1(solo3 and solo2 are backwards compatible) asic can be found on ![webtv wiki](http://wiki.webtv.zone/misc/SOLO1/SOLO1_ASIC_Spec.pdf), or ![on my server](https://tendhost.ddns.net/data/SOLO1_ASIC_Spec.pdf)
+Documentation of solo1(solo3 and solo2 are backwards compatible) asic can be found on ![webtv wiki](http://wiki.webtv.zone/misc/SOLO1/SOLO1_ASIC_Spec.pdf)(http://wiki.webtv.zone/misc/SOLO1/SOLO1_ASIC_Spec.pdf), or ![on my server](https://tendhost.ddns.net/data/SOLO1_ASIC_Spec.pdf)(https://tendhost.ddns.net/data/SOLO1_ASIC_Spec.pdf)
 
 # How i can run approm.o on my webtv?
 There are 2 ways to sideload approm.o and run it
